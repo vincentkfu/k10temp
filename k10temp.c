@@ -130,6 +130,9 @@ static ssize_t temp1_input_show(struct device *dev,
 
 	data->read_tempreg(data->pdev, &regval);
 	temp = (regval >> 21) * 125;
+	/* bit 20 indicates an additional temp offset of 49 degrees C */
+	if (regval & 0x80000)
+		temp -= 49000;
 	if (temp > data->temp_offset)
 		temp -= data->temp_offset;
 	else
