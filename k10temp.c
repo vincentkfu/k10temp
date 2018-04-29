@@ -204,8 +204,7 @@ static ssize_t show_temp_crit(struct device *dev,
 	u32 regval;
 	int value;
 
-	pci_read_config_dword(data->pdev,
-			      REG_HARDWARE_THERMAL_CONTROL, &regval);
+	data->read_htcreg(data->pdev, &regval);
 	value = ((regval >> 16) & 0x7f) * 500 + 52000;
 	if (show_hyst)
 		value -= ((regval >> 24) & 0xf) * 500;
