@@ -14,7 +14,12 @@ KERNEL_BUILD	:= $(KERNEL_MODULES)/build
 endif
 endif
 
+ifneq ("","$(wildcard /boot/System.map-$(TARGET))")
 SYSTEM_MAP	:= /boot/System.map-$(TARGET)
+else
+# Arch
+SYSTEM_MAP	:= /proc/kallsyms
+endif
 
 DRIVER := k10temp
 
